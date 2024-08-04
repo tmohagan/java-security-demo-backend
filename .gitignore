@@ -78,3 +78,6 @@ src/main/resources/application-*.properties
 ### Logs ###
 logs/
 *.log
+
+### Temp ###
+temp
