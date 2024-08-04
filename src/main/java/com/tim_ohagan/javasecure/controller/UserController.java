@@ -2,6 +2,9 @@ package com.tim_ohagan.javasecure.controller;
 
 import com.tim_ohagan.javasecure.model.User;
 import com.tim_ohagan.javasecure.service.UserService;
+
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -38,6 +41,15 @@ public class UserController {
             user.setId(existingUser.getId());
             User updatedUser = userService.updateUser(user);
             return ResponseEntity.ok(updatedUser);
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/current")
+    public ResponseEntity<User> getCurrentUser(Principal principal) {
+        User user = userService.getUserByEmail(principal.getName());
+        if (user != null) {
+            return ResponseEntity.ok(user);
         }
         return ResponseEntity.notFound().build();
     }
